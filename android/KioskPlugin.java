@@ -37,8 +37,13 @@ public class KioskPlugin extends CordovaPlugin {
     public static final String INIT_KIOSK = "initKiosk";
     
     public static final String SUSPEND_KIOSK = "suspentKiosk";
+    
+    private static final String RESUME_KIOSK = "resumeKiosk";
 
     private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
+    
+
+    
     
     /**
      * method checks to see if app is currently set as default launcher
@@ -120,18 +125,15 @@ public class KioskPlugin extends CordovaPlugin {
                 
                 callbackContext.success();
                 return true;
-            }
-            else if (SUSPEND_KIOSK.equals(action)) {
-                //PackageManager packageManager = this.cordova.getActivity().getPackageManager();
-                //packageManager.clearPackagePreferredActivities(this.cordova.getActivity().getPackageName());
-                //Intent intent = new Intent(Intent.ACTION_MAIN);
-                //intent.addCategory(Intent.CATEGORY_HOME);
+            } else if (SUSPEND_KIOSK.equals(action)) {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
                 sp.edit().putBoolean(PREF_KIOSK_MODE, false).commit();
-                //if (intent.resolveActivity(cordova.getActivity().getPackageManager()) != null) {
-                //    cordova.getActivity().startActivity(intent);
-                //    android.os.Process.killProcess(android.os.Process.myPid());
-                //}
+              
+                callbackContext.success();
+                return true;
+            } else if (RESUME_KIOSK.equals(action)) {
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
+                sp.edit().putBoolean(PREF_KIOSK_MODE, true).commit();
                 
                 callbackContext.success();
                 return true;
