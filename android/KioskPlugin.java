@@ -119,6 +119,21 @@ public class KioskPlugin extends CordovaPlugin {
                 callbackContext.success();
                 return true;
             }
+            else if (SUSPEND_KIOSK.equals(action)) {
+                //PackageManager packageManager = this.cordova.getActivity().getPackageManager();
+                //packageManager.clearPackagePreferredActivities(this.cordova.getActivity().getPackageName());
+                //Intent intent = new Intent(Intent.ACTION_MAIN);
+                //intent.addCategory(Intent.CATEGORY_HOME);
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
+                sp.edit().putBoolean(PREF_KIOSK_MODE, false).commit();
+                //if (intent.resolveActivity(cordova.getActivity().getPackageManager()) != null) {
+                //    cordova.getActivity().startActivity(intent);
+                //    android.os.Process.killProcess(android.os.Process.myPid());
+                //}
+                
+                callbackContext.success();
+                return true;
+            }
             callbackContext.error("Invalid action");
             return false;
         } catch(Exception e) {
