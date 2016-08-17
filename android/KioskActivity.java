@@ -134,8 +134,8 @@ public class KioskActivity extends CordovaActivity {
     public void onPause()
     {
         super.onPause();
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        sp.edit().putBoolean(PREF_KIOSK_MODE, true).commit();
+        //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        //sp.edit().putBoolean(PREF_KIOSK_MODE, true).commit();
         if(!sp.getBoolean(PREF_KIOSK_MODE, false)) {
             return;
         }
@@ -155,8 +155,8 @@ public class KioskActivity extends CordovaActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        sp.edit().putBoolean(PREF_KIOSK_MODE, true).commit();
+        //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        //sp.edit().putBoolean(PREF_KIOSK_MODE, true).commit();
         if(!sp.getBoolean(PREF_KIOSK_MODE, false)) {
             return;
         }
