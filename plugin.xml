@@ -56,7 +56,7 @@
                         <category android:name="android.intent.category.DEFAULT" />
                     </intent-filter>
                 </activity>
-            <activity android:label="Rilevatore Presenze Modalità Chiosco" android:launchMode="singleInstance" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity" android:screenOrientation="sensorLandscape">
+            <activity android:label="Logistik Assistent" android:launchMode="singleInstance" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|uiMode" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.DEFAULT" />
