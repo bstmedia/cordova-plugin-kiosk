@@ -29,6 +29,14 @@ var KioskPlugin = {
         }, function(error){
             alert("KioskPlugin.suspentKiosk failed: "+error);
         }, "KioskPlugin", "suspentKiosk", []);
+    },
+    
+    resumeKiosk: function (callback) {
+        exec(function(out){
+            callback(out=="true");
+        }, function(error){
+            alert("KioskPlugin.resumeKiosk failed: "+error);
+        }, "KioskPlugin", "resumeKiosk", []);
     }
     
     
