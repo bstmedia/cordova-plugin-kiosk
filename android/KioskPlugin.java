@@ -35,6 +35,8 @@ public class KioskPlugin extends CordovaPlugin {
     public static final String IS_IN_KIOSK = "isInKiosk";
     
     public static final String INIT_KIOSK = "initKiosk";
+    
+    public static final String SUSPEND_KIOSK = "suspentKiosk";
 
     private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
     
