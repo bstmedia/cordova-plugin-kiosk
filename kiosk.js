@@ -15,14 +15,6 @@ var KioskPlugin = {
         }, "KioskPlugin", "isInKiosk", []);
     },
 
-    initKiosk: function (callback) {
-        exec(function(out){
-            callback(out=="true");
-        }, function(error){
-            alert("KioskPlugin.initKiosk failed: "+error);
-        }, "KioskPlugin", "initKiosk", []);
-    },
-    
     suspentKiosk: function (callback) {
         exec(function(out){
             callback(out=="true");
