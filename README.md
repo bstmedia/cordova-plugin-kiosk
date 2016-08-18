@@ -12,8 +12,15 @@ If applications starts as usual (not as launcher), no restrictions will be appli
 
 Plugin website: https://github.com/honza889/cordova-plugin-kiosk
 Example app: https://github.com/honza889/cordova-kiosk-demo
+Forked from: Lughino/cordova-plugin-kiosk
+
 
 **Note for iOS:** This plugin is for Android for now. Support of iOS would be useless, becase this feature is builded in iOS as Guided Access - see Settings - General - Accessibility - Guided Access
+
+This Fork
+-----
+I have added a suspent and resume function which was needed to inteact wiht BT Printer pairing dialog.
+
 
 About
 -----
@@ -22,7 +29,7 @@ By adding this Cordova plugin the Cordova app becomes the the homescreen (also k
 
 To add plugin into existing Cordova / Phonegap application:
 
-    cordova plugin add https://github.com/honza889/cordova-plugin-kiosk.git
+    cordova plugin add https://github.com/bstmedia/cordova-plugin-kiosk.git
 
 The `AndroidManifest.xml` should be updated immediately. If not, you can force it by removing and re-adding Android platform:
 
@@ -36,6 +43,12 @@ To it work user have to set this application as launcher (see below) and start i
 Exiting from Kiosk mode using Javascript:
 
     KioskPlugin.exitKiosk();
+    
+Suspent and resume from Kiosk mode using Javascript:
+
+    KioskPlugin.suspentKiosk();
+    //do something here
+    KioskPlugin.resumeKiosk();
 
 For using example see: https://github.com/honza889/cordova-kiosk-demo
 
