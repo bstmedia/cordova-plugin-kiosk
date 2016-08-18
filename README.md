@@ -19,7 +19,7 @@ Forked from: Lughino/cordova-plugin-kiosk
 
 This Fork
 -----
-I have added a suspent and resume function which was needed to inteact wiht BT Printer pairing dialog.
+Suspent and resume function added which was needed to interact with a  BT Printer pairing dialog.
 
 
 About
