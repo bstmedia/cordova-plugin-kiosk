@@ -13,7 +13,7 @@
         or by uninstallation app using adb. (Keeping USB debug allowed recommended.)
         If applications starts as usual (not as launcher), no restrictions will be applied.
 
-        Plugin website: https://github.com/honza889/cordova-plugin-kiosk
+        Plugin website: https://github.com/bstmedia/cordova-plugin-kiosk
         Example app: https://github.com/honza889/cordova-kiosk-demo
 
         This plugin is for Android for now. Support of iOS would be useless,
