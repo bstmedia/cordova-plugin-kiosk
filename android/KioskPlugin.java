@@ -34,8 +34,6 @@ public class KioskPlugin extends CordovaPlugin {
     
     public static final String IS_IN_KIOSK = "isInKiosk";
     
-    public static final String INIT_KIOSK = "initKiosk";
-    
     public static final String SUSPEND_KIOSK = "suspentKiosk";
     
     private static final String RESUME_KIOSK = "resumeKiosk";
@@ -76,25 +74,7 @@ public class KioskPlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         try {
-            if (INIT_KIOSK.equals(action)) {
-                if(!isMyLauncherDefault()) {
-                  PackageManager p = this.cordova.getActivity().getPackageManager();
-                  ComponentName cN = new ComponentName(this.cordova.getActivity().getApplicationContext(), FakeHome.class);
-                  p.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-
-                  Intent selector = new Intent(Intent.ACTION_MAIN);
-                  selector.addCategory(Intent.CATEGORY_HOME);
-                  selector.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                  this.cordova.getActivity().startActivity(selector);
-
-                  p.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-                  android.os.Process.killProcess(android.os.Process.myPid());
-                }
-
-                callbackContext.success(Boolean.toString(KioskActivity.running));
-                return true;
-
-            } else if (IS_IN_KIOSK.equals(action)) {
+            if (IS_IN_KIOSK.equals(action)) {
                 if(!isMyLauncherDefault()) {
                   PackageManager p = this.cordova.getActivity().getPackageManager();
                   ComponentName cN = new ComponentName(this.cordova.getActivity().getApplicationContext(), FakeHome.class);
