@@ -20,7 +20,7 @@ import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import jk.cordova.plugin.kiosk.KioskActivity;
-import com.t3hh4xx0r.haxlauncher.FakeHome;
+import com.bstmedia.launcher.FakeHome;
 import org.json.JSONObject;
 import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
