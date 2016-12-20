@@ -6,12 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.ComponentName;
+// import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import org.apache.cordova.*;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -22,17 +23,22 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-
 import java.lang.reflect.Method;
+import android.widget.Toast;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class KioskActivity extends CordovaActivity {
 
     private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
     private static final int REQUEST_CODE = 123467;
     public static boolean running = false;
+	public static boolean recent = false;
     Object statusBarService;
     ActivityManager am;
     String TAG = "KioskActivity";
+	Handler mHandler = new Handler();
+	
 
     protected void onStart() {
         super.onStart();
@@ -45,6 +51,9 @@ public class KioskActivity extends CordovaActivity {
             addOverlay();
         }
         running = true;
+		
+		mHandler.postDelayed(mLaunchTask,10000);
+		// Toast.makeText(getApplicationContext(), "KioskActivity.onStart running " + running, Toast.LENGTH_LONG).show();		
     }
     //http://stackoverflow.com/questions/7569937/unable-to-add-window-android-view-viewrootw44da9bc0-permission-denied-for-t
     @TargetApi(Build.VERSION_CODES.M)
@@ -102,6 +111,9 @@ public class KioskActivity extends CordovaActivity {
         super.onCreate(savedInstanceState);
         super.init();
         loadUrl(launchUrl);
+		//Toast.makeText(getApplicationContext(), "KioskActivity.onCreate", Toast.LENGTH_LONG).show();	
+		
+		openRecent(this, "TOGGLE_RECENTS");		
     }
 
     private void collapseNotifications()
@@ -142,13 +154,18 @@ public class KioskActivity extends CordovaActivity {
         if(am == null) {
             am = ((ActivityManager)getSystemService("activity"));
         }
-        am.moveTaskToFront(getTaskId(), 1);
-        //sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-        collapseNotifications();
+		if (recent) {
+			am.moveTaskToFront(getTaskId(), 1);
+			//sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
+			collapseNotifications();
+		}
+        
+	    //Toast.makeText(getApplicationContext(), "KioskActivity.onPause", Toast.LENGTH_LONG).show();		
     }
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+		//Toast.makeText(getApplicationContext(), "KioskActivity.onKeyDown " + keyCode, Toast.LENGTH_LONG).show();
         return true;
     }
 
@@ -162,17 +179,19 @@ public class KioskActivity extends CordovaActivity {
         }
         if (!hasFocus) {
             if(am == null) {
-                am = ((ActivityManager)getSystemService("activity"));
+                am = ((ActivityManager)getSystemService("activity"));				
             }
-            am.moveTaskToFront(getTaskId(), 1);
-            //sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
-            collapseNotifications();
+			if (recent) {
+				 am.moveTaskToFront(getTaskId(), 1);
+				//sendBroadcast(new Intent("android.intent.action.CLOSE_SYSTEM_DIALOGS"));
+				collapseNotifications();				
+			}           
         }
+		//Toast.makeText(getApplicationContext(), "KioskActivity.onWindowFocusChanged " + hasFocus, Toast.LENGTH_LONG).show();
     }
 
     //http://stackoverflow.com/questions/25284233/prevent-status-bar-for-appearing-android-modified?answertab=active#tab-top
     public class CustomViewGroup extends ViewGroup {
-
         public CustomViewGroup(Context context) {
             super(context);
         }
@@ -186,5 +205,24 @@ public class KioskActivity extends CordovaActivity {
             return true;
         }
     }
+	
+	
+	/** Workaround for Android 5.1.1 with NFC in Kiosk Mode.
+	 *  This will trigger recent applications and bring back the application with ForegroundDispatch
+	 */
+	public static boolean openRecent(Context context, String packageName) {	  		
+		Intent intent = new Intent("com.android.systemui.recent.action.TOGGLE_RECENTS");
+		intent.setComponent(new ComponentName("com.android.systemui", "com.android.systemui.recent.RecentsActivity"));
+		context.startActivity(intent);
+		return true;		
+	}
+	
+    private Runnable mLaunchTask = new Runnable() {
+         public void run() { 
+			recent = true;			 
+        }
+      };
+	 
+	
 }
 
