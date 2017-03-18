@@ -33,6 +33,8 @@ public class KioskPlugin extends CordovaPlugin {
     public static final String EXIT_KIOSK = "exitKiosk";
     
     public static final String IS_IN_KIOSK = "isInKiosk";
+	
+	public static final String ACTIVATE_KIOSK = "activateKiosk";
     
     public static final String SUSPEND_KIOSK = "suspentKiosk";
     
@@ -76,6 +78,14 @@ public class KioskPlugin extends CordovaPlugin {
         try {
             if (IS_IN_KIOSK.equals(action)) {
                 if(!isMyLauncherDefault()) {
+                 
+                }                
+                callbackContext.success(Boolean.toString(KioskActivity.running));
+                return true;
+                
+            } 
+			else if (ACTIVATE_KIOSK.equals(action)) {
+                  if(!isMyLauncherDefault()) {
                   PackageManager p = this.cordova.getActivity().getPackageManager();
                   ComponentName cN = new ComponentName(this.cordova.getActivity().getApplicationContext(), FakeHome.class);
                   p.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
@@ -90,8 +100,8 @@ public class KioskPlugin extends CordovaPlugin {
                 
                 callbackContext.success(Boolean.toString(KioskActivity.running));
                 return true;
-                
-            } else if (EXIT_KIOSK.equals(action)) {
+            }			
+			else if (EXIT_KIOSK.equals(action)) {
                 PackageManager packageManager = this.cordova.getActivity().getPackageManager();
                 packageManager.clearPackagePreferredActivities(this.cordova.getActivity().getPackageName());
                 Intent intent = new Intent(Intent.ACTION_MAIN);
